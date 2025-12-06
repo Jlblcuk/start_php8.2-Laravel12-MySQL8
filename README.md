@@ -15,7 +15,11 @@
 
 ```bash
 git clone https://github.com/Jlblcuk/start_php8.2-Laravel12-MySQL8.git
+```
+```bash
 cd start_php8.2-Laravel12-MySQL8
+```
+```bash
 ./start.sh
 ```
 или
