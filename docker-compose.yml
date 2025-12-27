@@ -1,62 +1,62 @@
- services:
-    app:
-        build:
-            context: .
-            dockerfile: docker/php/Dockerfile
-        image: laravel-app
-        mem_limit: 600m
-        container_name: laravel-app
-        restart: unless-stopped
-        tty: true
-        environment:
-            SERVICE_NAME: app
-            SERVICE_TAGS: dev
-        working_dir: /var/www
-        volumes:
-            - ./src:/var/www
-            - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
-        networks:
-            - laravel-network
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    image: laravel-app
+    mem_limit: 600m
+    container_name: laravel-app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./src:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - laravel-network
 
-    web:
-        image: nginx:alpine
-        mem_limit: 80m
-        container_name: laravel-web
-        restart: unless-stopped
-        tty: true
-        ports:
-            - "80:80"
-        volumes:
-            - ./src:/var/www
-            - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
-        networks:
-            - laravel-network
-        depends_on:
-            - app
+  web:
+    image: nginx:alpine
+    mem_limit: 80m
+    container_name: laravel-web
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - laravel-network
+    depends_on:
+      - app
 
-    db:
-        image: mysql:8.0
-        mem_limit: 600m
-        container_name: laravel-db
-        restart: unless-stopped
-        tty: true
-        ports:
-            - "3306:3306"
-        command: --innodb-buffer-pool-size=128M --key-buffer-size=32M
-        environment:
-            MYSQL_DATABASE: ${DB_DATABASE:-laravel}
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
-            MYSQL_PASSWORD: ${DB_PASSWORD:-password}
-            MYSQL_USER: ${DB_USERNAME:-laravel}
-        volumes:
-            - dbdata:/var/lib/mysql
-        networks:
-            - laravel-network
+  db:
+    image: mysql:8.0
+    mem_limit: 600m
+    container_name: laravel-db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    command: --innodb-buffer-pool-size=128M --key-buffer-size=32M
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_USER: ${DB_USERNAME:-laravel}
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - laravel-network
 
 networks:
-    laravel-network:
-        driver: bridge
+  laravel-network:
+    driver: bridge
 
 volumes:
-    dbdata:
-        driver: local
+  dbdata:
+    driver: local
