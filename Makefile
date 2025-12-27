@@ -8,16 +8,17 @@ else
 endif
 
 # Команды
-.PHONY: up down build shell install migrate help
+.PHONY: install up migrate refresh down build shell test help
 
 help:
 	@echo "Commands:"
+	@echo "  make install  - Run bash-script first settings (start.sh)"
 	@echo "  make up       - Run containers"
+	@echo "  make migrate  - Run migrate and seed"
+	@echo "  make refresh  - Run refresh and seed"
 	@echo "  make down     - Stop and delete containers"
 	@echo "  make build    - Build containers"
 	@echo "  make shell    - Enter console containers"
-	@echo "  make install  - Run bash-script first settings (start.sh)"
-	@echo "  make migrate  - Run migrate db"
 	@echo "  make test     - Run tests"
 
 up:
@@ -36,7 +37,11 @@ install:
 	./start.sh
 
 migrate:
-	$(DOCKER_COMPOSE) exec app php artisan migrate
+	$(DOCKER_COMPOSE) exec app php artisan migrate --force
+	$(DOCKER_COMPOSE) exec -T app php artisan db:seed --force
+
+refresh:
+	$(DOCKER_COMPOSE) exec -T app php artisan migrate:fresh --seed --force
 
 test:
 	$(DOCKER_COMPOSE) exec app php artisan test

@@ -1,4 +1,4 @@
-services:
+ services:
     app:
         build:
             context: .
@@ -13,7 +13,7 @@ services:
             SERVICE_TAGS: dev
         working_dir: /var/www
         volumes:
-            - ./:/var/www
+            - ./src:/var/www
             - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
         networks:
             - laravel-network
@@ -27,7 +27,7 @@ services:
         ports:
             - "80:80"
         volumes:
-            - ./:/var/www
+            - ./src:/var/www
             - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
         networks:
             - laravel-network

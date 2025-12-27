@@ -1,4 +1,4 @@
-# 🚀 Laravel Docker Starter
+# Laravel Docker Starter
 
 Минимальная Docker-сборка для быстрого старта Laravel-проекта.  
 
@@ -13,18 +13,10 @@
 
 ##  Быстрый запуск
 
-```bash
-git clone https://github.com/Jlblcuk/start_php8.2-Laravel12-MySQL8.git
-```
-```bash
-cd start_php8.2-Laravel12-MySQL8
-```
-```bash
-./start.sh
-```
-или
-```bash
-make install
-```
+---
+
+**Для инициализации проекта см.:** [docs/init.md](docs/init.md)
+
+---
 
 Laravel будет доступен по: [http://localhost](http://localhost)
