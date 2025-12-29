@@ -8,7 +8,7 @@ else
 endif
 
 # Команды
-.PHONY: install up migrate refresh down build shell test help
+.PHONY: install up migrate refresh down fulldown  build shell test help
 
 help:
 	@echo "Commands:"
@@ -17,6 +17,7 @@ help:
 	@echo "  make migrate  - Run migrate and seed"
 	@echo "  make refresh  - Run refresh and seed"
 	@echo "  make down     - Stop and delete containers"
+	@echo "  make fulldown - Stop and delete containers, volumes, images"
 	@echo "  make build    - Build containers"
 	@echo "  make shell    - Enter console containers"
 	@echo "  make test     - Run tests"
@@ -26,6 +27,9 @@ up:
 
 down:
 	$(DOCKER_COMPOSE) down
+
+fulldown:
+	$(DOCKER_COMPOSE) down -v --rmi all
 
 build:
 	$(DOCKER_COMPOSE) build
