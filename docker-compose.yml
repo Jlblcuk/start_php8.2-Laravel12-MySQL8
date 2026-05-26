@@ -45,7 +45,7 @@ services:
     command: --innodb-buffer-pool-size=128M --key-buffer-size=32M
     environment:
       MYSQL_DATABASE: ${DB_DATABASE:-laravel}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-SuperSecretRoot123!}
       MYSQL_PASSWORD: ${DB_PASSWORD:-password}
       MYSQL_USER: ${DB_USERNAME:-laravel}
     volumes:
