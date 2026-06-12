@@ -19,10 +19,10 @@ else
 fi
 
 # Переименовываем README.md в резервную копию
-#if [ -f README.md ]; then
-#    mv README.md README.md.bak
-#    echo "Renamed README.md → README.md.bak"
-#fi
+if [ -f README.md ]; then
+    mv README.md README.md.bak
+    echo "Renamed README.md → README.md.bak"
+fi
 
 # Создаём .env из примера, если его нет
 if [ ! -f .env ]; then
@@ -41,10 +41,11 @@ if [ -f src/.env ]; then
     export $(grep -v '^#' src/.env | xargs)
 fi
 
-DB_USERNAME=${DB_USERNAME:-laravel}
-DB_PASSWORD=${DB_PASSWORD:-password}
+# Устанавливаем значения по умолчанию, если не заданы
+: "${DB_USERNAME:=app_user}"
+: "${DB_PASSWORD:=secret}"
 
-timeout=30
+timeout=60
 counter=0
 until $DOCKER_COMPOSE exec -T db mysql -u "$DB_USERNAME" -p"$DB_PASSWORD" -e "SELECT 1;" > /dev/null 2>&1; do
     counter=$((counter+1))
