@@ -169,4 +169,4 @@ $DOCKER_COMPOSE exec -T app php artisan storage:link
 echo "Setting permissions..."
 $DOCKER_COMPOSE exec -T app chmod -R 777 storage bootstrap/cache
 
-echo "Laravel is ready! Visit $APP_URL"
+echo "Laravel is ready! Visit: $APP_URL"
